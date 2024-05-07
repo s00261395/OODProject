@@ -1,0 +1,490 @@
+﻿<Window x:Class="OOD_Project.MapWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OOD_Project"
+        WindowState="Maximized"
+        mc:Ignorable="d"
+        Title="MapWindow" Height="600" Width="800" Background="#333333">
+
+    <Window.Resources>
+        <Style x:Key="ToolbarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <!-- Contenu principal simulant le flux de photos -->
+        <Frame x:Name="MainFrame" Background="#333333"/>
+
+        <Canvas>
+            <Image Source="Tools/Map2.png" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50 50 50 50"/>
+            <Image Source="Tools/Map.png" Stretch="Uniform" Width="25" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="294" Canvas.Top="392"/>
+
+            <!--bouton superposé a l image -->
+            <Button Content="" Width="30" Height="30" Canvas.Left="459" Visibility="Visible" Canvas.Top="245" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Brewery"/>
+            <Button Content="" Width="20" Height="20" Canvas.Left="307" Visibility="Visible" Canvas.Top="377" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="TheMill" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <!-- Ajoutez les boutons pour les autres bars ici -->
+            <Button Content="" Width="20" Height="20" Canvas.Left="266" Visibility="Visible" Canvas.Top="347" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="LeitrimBar"/>
+            <Button Content="" Width="20" Height="20" Canvas.Left="153" Visibility="Visible" Canvas.Top="362" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Swagman"/>
+
+            <Button Content="" Width="10" Height="10" Canvas.Left="245" Visibility="Visible" Canvas.Top="399" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Belfry" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="223" Visibility="Visible" Canvas.Top="394" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Bourbon"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="203" Visibility="Visible" Canvas.Top="347" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Connolly"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="266" Visibility="Visible" Canvas.Top="382" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Earleys" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+            <Button Content="" Width="10" Height="10" Canvas.Left="240" Visibility="Visible" Canvas.Top="421" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Foleys" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="208" Visibility="Visible" Canvas.Top="367" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Garavogue"/>
+            <Button Content="" Width="20" Height="20" Canvas.Left="173" Visibility="Visible" Canvas.Top="411" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Jennys"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="245" Visibility="Visible" Canvas.Top="377" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Lillies"/>
+            <Button Content="" Width="15" Height="15" Canvas.Left="299" Visibility="Visible" Canvas.Top="402" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Lolas"/>
+
+            <Button Content="" Width="20" Height="20" Canvas.Left="235" Visibility="Visible" Canvas.Top="447" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="McLynns"/>
+            <Button Content="" Width="20" Height="20" Canvas.Left="88" Visibility="Visible" Canvas.Top="426" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Oneills" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="218" Visibility="Visible" Canvas.Top="329" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="RendezVous" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Content="" Width="10" Height="10" Canvas.Left="213" Visibility="Visible" Canvas.Top="382" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Snug"/>
+
+            <Button Content="" Width="10" Height="10" Canvas.Left="271" Visibility="Visible" Canvas.Top="357" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Andersons" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Button Content="" Width="20" Height="20" Canvas.Left="213" Visibility="Visible" Canvas.Top="466" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Troubadour" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Content="" Width="20" Height="20" Canvas.Left="235" Visibility="Visible" Canvas.Top="526" Click="BarButtonClick" Background="Transparent" BorderBrush="Transparent" Tag="Cahenys" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+        </Canvas>
+
+        <!-- Grid pour afficher les informations du bar 1-->
+        <Border x:Name="BreweryGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Brewery.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtBarName1" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtBarDescription1" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 2-->
+        <Border x:Name="TheMillGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/TheMillBar.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtMill" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtMillDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 3-->
+        <Border x:Name="LeitrimGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Leitrim.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtLeitrim" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtLeitrimDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 4-->
+        <Border x:Name="SwagmanGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Swagman.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtSwagman" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtSwagmanDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 5-->
+        <Border x:Name="BelfryGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Belfry.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtBelfry" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtBelfryDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 6-->
+        <Border x:Name="BourbonGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Bourbon.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtBourbon" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtBourbonDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar7 -->
+        <Border x:Name="ConnollyGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Connolly.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtConnolly" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtConnollyDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar8 -->
+        <Border x:Name="EarleysGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Earleys.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtEarleys" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtEarleysDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 9-->
+        <Border x:Name="FoleysGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Foleys.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtFoleys" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtFoleysDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 10-->
+        <Border x:Name="GaravogueGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Garavogue.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtGaravogue" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtGaravogueDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 11 -->
+        <Border x:Name="JennysGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Jennys.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtJennys" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtJennysDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 12-->
+        <Border x:Name="LilliesGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Lillies.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtLillies" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtLilliesDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 13-->
+        <Border x:Name="LolasGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Lolas.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtLolas" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtLolasDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 14 -->
+        <Border x:Name="McLynnsGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/McLynns.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtMcLynns" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtMcLynnsDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 15 -->
+        <Border x:Name="OneillsGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Oneils.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtOneils" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtOneilsDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <!-- Grid pour afficher les informations du bar 16-->
+        <Border x:Name="RendezVousGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/RDV.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtRDV" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtRDVDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar17 -->
+        <Border x:Name="SnugGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Snug.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtSnug" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtSnugDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 18 -->
+        <Border x:Name="AndersonsGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Andersons.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtAndersons" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtAndersonsDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <!-- Grid pour afficher les informations du bar 19-->
+        <Border x:Name="TroubadourGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Troubadour.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtTroubadour" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtTroubadourDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Grid pour afficher les informations du bar 19-->
+        <Border x:Name="CahenysGrid" Background="#333333" Visibility="Hidden" Margin="800 0 0 0" Width="700" BorderBrush="Black" BorderThickness="1" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Image du bar -->
+                <Image Grid.Column="0" Source="/Bars1/Cahenys.jpg" Width="400" Height="400" Margin="20"/>
+
+                <!-- Ajoutez ici les informations du bar -->
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <TextBlock x:Name="txtCahennys" Margin="10" FontSize="30" Foreground="WhiteSmoke"/>
+                    <TextBlock x:Name="txtCahennysDescription" TextWrapping="Wrap" Margin="10" FontSize="20" Foreground="White"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+
+
+
+
+        <!-- Barre d'outils en bas de l'écran -->
+        <Grid Background="#333333" Height="60" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Boutons de navigation -->
+            <Button Grid.Column="0" Margin="10" Click="ButtonHome_Click">
+                <Image Source="/Tools/Home.png" Width="30" Height="30"/>
+            </Button>
+            <Button Grid.Column="1" Margin="10" Click="ButtonSearch_Click">
+                <Image Source="/Tools/Search.png" Width="30" Height="30"/>
+            </Button>
+            <Button Grid.Column="2" Margin="10" Click="ButtonMap_Click">
+                <Image Source="/Tools/Map.png" Width="30" Height="30"/>
+            </Button>
+            <Button Grid.Column="3" Margin="10" Click="ButtonFire_Click">
+                <Image Source="/Tools/Feutdr.png" Width="30" Height="30"/>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
